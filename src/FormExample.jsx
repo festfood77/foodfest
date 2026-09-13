@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 
 /* ─── constants ─── */
@@ -70,6 +70,7 @@ function FloatingInput({ id, label, type = "text", register, error, ...rest }) {
 }
 
 /** Don selection card group */
+// eslint-disable-next-line no-unused-vars
 function DonSelector({ value, onChange, error }) {
   return (
     <div>
