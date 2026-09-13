@@ -22,7 +22,7 @@ export default function ApplicationSubmitted() {
         </h2>
         <p className="mx-auto max-w-xs text-sm leading-6 text-[#8a715b]">
           Thank you for registering. You will receive audition details and all
-          future updates via your registered email.
+          future updates on your registered phone number via WhatsApp.
         </p>
       </motion.div>
     </div>
