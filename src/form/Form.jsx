@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { supabase } from "../lib/supabase";
 import DateSelector from "./DateSelector";
 import FloatingInput from "./FloatingInput";
 import TicketCounter from "./TicketCounter";
