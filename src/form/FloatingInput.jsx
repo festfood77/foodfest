@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 export default function FloatingInput({
   id,
@@ -8,8 +8,6 @@ export default function FloatingInput({
   error,
   ...rest
 }) {
-  const [focused, setFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(false);
   return (
     <div className="relative w-full">
       <input
@@ -17,22 +15,12 @@ export default function FloatingInput({
         type={type}
         {...register}
         {...rest}
-        onFocus={() => setFocused(true)}
-        onBlur={(event) => {
-          setFocused(false);
-          setHasValue(event.target.value.length > 0);
-          register.onBlur?.(event);
-        }}
-        onChange={(event) => {
-          setHasValue(event.target.value.length > 0);
-          register.onChange?.(event);
-        }}
-        placeholder={label}
-        className={`peer w-full rounded-[var(--radius-input)] border bg-white px-4 pb-2 pt-5 text-sm text-brand-400 outline-none transition-all placeholder-transparent focus:ring-2 focus:ring-brand-300/25 ${error ? "border-red-500 focus:border-red-500" : "border-[#ead8b0] focus:border-brand-300"}`}
+        placeholder=" "
+        className={`peer w-full rounded-[var(--radius-input)] border bg-white px-4 pb-2 pt-5 text-sm text-brand-400 outline-none transition-all focus:ring-2 focus:ring-brand-300/25 ${error ? "border-red-500 focus:border-red-500" : "border-[#ead8b0] focus:border-brand-300"}`}
       />
       <label
         htmlFor={id}
-        className={`pointer-events-none absolute left-4 font-medium transition-all duration-200 ${focused || hasValue ? "top-1.5 text-[10px] text-brand-300" : "top-[14px] text-sm text-[#8a715b]"}`}
+        className="pointer-events-none absolute left-4 font-medium transition-all duration-200 top-1.5 text-[10px] text-brand-300 peer-placeholder-shown:top-[14px] peer-placeholder-shown:text-sm peer-placeholder-shown:text-[#8a715b] peer-focus:top-1.5 peer-focus:text-[10px] peer-focus:text-brand-300"
       >
         {label}
       </label>

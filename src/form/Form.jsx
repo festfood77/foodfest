@@ -31,6 +31,7 @@ export default function Form() {
     handleSubmit,
     control,
     watch,
+    reset,
     formState: { errors, isDirty },
   } = useForm({
     defaultValues: savedDraft || { fullName: "", mobile: "", email: "", date: "", age: "" },
@@ -110,6 +111,7 @@ export default function Form() {
             }
 
             localStorage.removeItem(STORAGE_KEY);
+            reset();
             setSubmitted(true);
           } catch (error) {
             console.error('Verification Error:', error);
