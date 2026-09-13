@@ -14,16 +14,46 @@ export default function Form() {
     register,
     handleSubmit,
     control,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm({
     defaultValues: { fullName: "", mobile: "", email: "", date: "", age: "" },
   });
-  const onSubmit = (data) =>
-    console.log({
-      ...data,
-      tickets: ticketCount,
-      totalAmount: ticketCount * TICKET_PRICE,
-    });
+
+  const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
+
+  // TODO: Implement form submission logic
+  const onSubmit = async (data) => {
+    setIsSubmitting(true);
+    try {
+      const res = await supabase.functions.invoke("create-razorpay-order", {
+        body: {
+          fullName: data.fullName,
+          mobile: data.mobile,
+          email: data.email,
+          date: data.date,
+          age: data.age,
+          tickets: ticketCount,
+        },
+      });
+
+      if (res.error || !res.data?.success) {
+        throw new Error(
+          res.error?.message ||
+            res.data?.error ||
+            "Failed to create application",
+        );
+      }
+      
+    } catch (error) {
+      console.error("Submission Error:", error);
+      alert(error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const totalAmount = ticketCount * TICKET_PRICE;
 
   return (
@@ -110,7 +140,7 @@ export default function Form() {
             )}
           />
           <div className="rounded-[var(--radius-input)] border border-[#ead8b0] bg-brand-50/60 px-4 py-3.5">
-            <TicketCounter  
+            <TicketCounter
               value={ticketCount}
               onChange={setTicketCount}
               MAX_TICKETS={MAX_TICKETS}
