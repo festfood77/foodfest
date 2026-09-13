@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { supabase } from "../lib/supabase";
+import ApplicationSubmitted from "./ApplicationSubmitted";
 import DateSelector from "./DateSelector";
 import FloatingInput from "./FloatingInput";
+import Spinner from "./Spinner";
 import TicketCounter from "./TicketCounter";
 
 const TICKET_PRICE = 299;
@@ -10,18 +12,51 @@ const MAX_TICKETS = 3;
 
 export default function Form() {
   const [ticketCount, setTicketCount] = useState(1);
+  const STORAGE_KEY = 'disneyland-foodfest-registration-draft';
+
+  const getSavedDraft = () => {
+    try {
+      const draft = localStorage.getItem(STORAGE_KEY);
+      if (draft) return JSON.parse(draft);
+    } catch (e) {
+      console.error('Failed to parse draft', e);
+    }
+    return null;
+  };
+
+  const savedDraft = getSavedDraft();
+
   const {
     register,
     handleSubmit,
     control,
-    formState: { errors },
+    watch,
+    formState: { errors, isDirty },
   } = useForm({
-    defaultValues: { fullName: "", mobile: "", email: "", date: "", age: "" },
+    defaultValues: savedDraft || { fullName: "", mobile: "", email: "", date: "", age: "" },
   });
 
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
+
+  const formData = watch();
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+  }, [formData]);
+
+  useEffect(() => {
+    if (!isDirty) return;
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = '';
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [isDirty]);
 
   // TODO: Implement form submission logic
   const onSubmit = async (data) => {
@@ -38,7 +73,7 @@ export default function Form() {
         },
       });
 
-      if (res.error || !res.data?.success) {
+      if (res.error || !res.data?.orderId) {
         throw new Error(
           res.error?.message ||
             res.data?.error ||
@@ -46,6 +81,59 @@ export default function Form() {
         );
       }
       
+      const { bookingId, orderId, amount, currency, keyId } = res.data;
+
+      const options = {
+        key: keyId,
+        amount: amount,
+        currency: currency,
+        name: "Disneyland Food Fest",
+        description: "Booking Entry Fee",
+        order_id: orderId,
+        handler: async function (response) {
+          setIsVerifying(true);
+          try {
+            const verifyRes = await supabase.functions.invoke(
+              'verify-razorpay-payment',
+              {
+                body: {
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_signature: response.razorpay_signature,
+                  booking_id: bookingId,
+                },
+              },
+            );
+
+            if (verifyRes.error || !verifyRes.data?.success) {
+              throw new Error('Payment verification failed');
+            }
+
+            localStorage.removeItem(STORAGE_KEY);
+            setSubmitted(true);
+          } catch (error) {
+            console.error('Verification Error:', error);
+            alert('Payment verification failed. Please contact support.');
+          } finally {
+            setIsVerifying(false);
+          }
+        },
+        prefill: {
+          name: data.fullName,
+          email: data.email,
+          contact: data.mobile,
+        },
+        theme: {
+          color: "#d68628",
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.on("payment.failed", function (response) {
+        alert("Payment failed: " + response.error.description);
+      });
+      rzp.open();
+
     } catch (error) {
       console.error("Submission Error:", error);
       alert(error.message);
@@ -55,6 +143,26 @@ export default function Form() {
   };
 
   const totalAmount = ticketCount * TICKET_PRICE;
+
+  if (submitted) {
+    return <ApplicationSubmitted />;
+  }
+
+  if (isVerifying) {
+    return (
+      <main className="mx-auto w-full max-w-xl px-4 pb-10 pt-5 sm:px-6">
+        <div className="flex min-h-[400px] flex-col items-center justify-center rounded-[var(--radius-card)] border border-[#ecd9aa] bg-[#fffaf0] p-5 shadow-[0_16px_45px_rgba(111,56,23,0.14)] sm:p-8">
+          <Spinner size={48} className="text-brand-300" />
+          <h2 className="mt-6 font-display text-xl font-bold text-brand-200">
+            Verifying Payment...
+          </h2>
+          <p className="mt-2 text-center text-sm text-[#8a715b]">
+            Please wait while we confirm your booking. Do not close this window.
+          </p>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="mx-auto w-full max-w-xl px-4 pb-10 pt-5 sm:px-6">
@@ -162,9 +270,16 @@ export default function Form() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="mt-1 w-full rounded-full bg-brand-200 py-4 text-base font-bold tracking-wide text-white shadow-[0_8px_18px_rgba(111,56,23,0.2)] transition hover:bg-brand-300 hover:shadow-[0_10px_24px_rgba(214,134,40,0.3)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-brand-300 focus:ring-offset-2"
+            className="mt-1 flex w-full items-center justify-center rounded-full bg-brand-200 py-4 text-base font-bold tracking-wide text-white shadow-[0_8px_18px_rgba(111,56,23,0.2)] transition hover:bg-brand-300 hover:shadow-[0_10px_24px_rgba(214,134,40,0.3)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-brand-300 focus:ring-offset-2"
           >
-            {isSubmitting ? "Processing…" : "Continue to payment  →"}
+            {isSubmitting ? (
+              <>
+                <Spinner size={20} className="mr-2 !text-white" />
+                Processing…
+              </>
+            ) : (
+              "Continue to payment  →"
+            )}
           </button>
           <p className="pb-1 text-center text-[11px] leading-5 text-[#8a715b]">
             By proceeding, you agree to our terms & conditions. Tickets are
