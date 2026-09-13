@@ -1,122 +1,52 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import Form from "./Form";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    /* Full-page gradient background */
+    <div className="min-h-dvh bg-gradient-to-br from-surface-0 via-surface-50 to-surface-100 flex flex-col items-center px-4 py-10">
 
-      <div className="ticks"></div>
+      {/* ── Card ── */}
+      <div className="w-full max-w-md bg-surface-100/80 backdrop-blur-sm border border-edge-subtle rounded-[1.5rem] shadow-[0_8px_64px_rgba(0,0,0,0.6)] overflow-hidden">
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        {/* ── Gradient accent bar at top ── */}
+        <div className="h-1 w-full bg-gradient-to-r from-brand-700 via-brand-500 to-gold-400" />
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        {/* ── Header ── */}
+        <div className="flex flex-col items-center gap-3 pt-8 pb-6 px-6">
+
+          {/* Icon placeholder */}
+          <div className="w-16 h-16 rounded-2xl bg-surface-200 border border-edge-mid flex items-center justify-center">
+            {/* TODO: Replace with your event icon/logo */}
+            <span className="text-2xl">🎬</span>
+          </div>
+
+          {/* Title placeholder */}
+          <div className="text-center">
+            {/* TODO: Replace with your event title */}
+            <h1 className="text-2xl font-bold text-ink-heading tracking-tight leading-tight">
+              Event Title Here
+            </h1>
+            <p className="text-sm text-ink-muted mt-1">
+              Book your tickets in seconds
+            </p>
+          </div>
+
+          {/* Decorative divider */}
+          <div className="w-full h-px bg-gradient-to-r from-transparent via-edge-mid to-transparent mt-2" />
+        </div>
+
+        {/* ── Form body ── */}
+        <div className="px-6 pb-8">
+          <Form />
+        </div>
+
+      </div>
+
+      {/* ── Bottom badge ── */}
+      <p className="mt-6 text-[11px] text-ink-muted text-center">
+        Secured &amp; Powered by <span className="text-brand-400 font-semibold">YourBrand</span>
+      </p>
+
+    </div>
+  );
 }
-
-export default App
