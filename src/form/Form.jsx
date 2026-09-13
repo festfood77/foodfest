@@ -1,133 +1,11 @@
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import DateSelector from "./DateSelector";
+import FloatingInput from "./FloatingInput";
+import TicketCounter from "./TicketCounter";
 
-const DATE_OPTIONS = [
-  { value: "2024-12-18", day: "Wed" },
-  { value: "2024-12-19", day: "Thu" },
-  { value: "2024-12-20", day: "Fri" },
-];
 const TICKET_PRICE = 299;
 const MAX_TICKETS = 3;
-
-function FloatingInput({ id, label, type = "text", register, error, ...rest }) {
-  const [focused, setFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(false);
-  return (
-    <div className="relative w-full">
-      <input
-        id={id}
-        type={type}
-        {...register}
-        {...rest}
-        onFocus={() => setFocused(true)}
-        onBlur={(event) => {
-          setFocused(false);
-          setHasValue(event.target.value.length > 0);
-          register.onBlur?.(event);
-        }}
-        onChange={(event) => {
-          setHasValue(event.target.value.length > 0);
-          register.onChange?.(event);
-        }}
-        placeholder={label}
-        className={`peer w-full rounded-[var(--radius-input)] border bg-white px-4 pb-2 pt-5 text-sm text-brand-400 outline-none transition-all placeholder-transparent focus:ring-2 focus:ring-brand-300/25 ${error ? "border-red-500 focus:border-red-500" : "border-[#ead8b0] focus:border-brand-300"}`}
-      />
-      <label
-        htmlFor={id}
-        className={`pointer-events-none absolute left-4 font-medium transition-all duration-200 ${focused || hasValue ? "top-1.5 text-[10px] text-brand-300" : "top-[14px] text-sm text-[#8a715b]"}`}
-      >
-        {label}
-      </label>
-      {error && (
-        <p className="mt-1 pl-1 text-xs text-red-600">{error.message}</p>
-      )}
-    </div>
-  );
-}
-
-function DateSelector({ value, onChange, error }) {
-  return (
-    <fieldset>
-      <legend className="mb-2.5 text-xs font-bold uppercase tracking-[0.16em] text-brand-300">
-        Date of visit
-      </legend>
-      <div className="grid grid-cols-3 gap-2.5">
-        {DATE_OPTIONS.map((date) => {
-          const selected = value === date.value;
-          return (
-            <button
-              key={date.value}
-              type="button"
-              onClick={() => onChange(date.value)}
-              aria-pressed={selected}
-              className={`relative overflow-hidden rounded-[var(--radius-input)] border px-2 py-3 text-center transition-all duration-200 ${selected ? "border-brand-300 bg-brand-50 shadow-[0_5px_16px_rgba(214,134,40,0.18)]" : "border-[#ead8b0] bg-white hover:border-brand-300/60 hover:bg-brand-50/50"}`}
-            >
-              <span
-                className={`block text-[11px] font-semibold ${selected ? "text-brand-300" : "text-[#8a715b]"}`}
-              >
-                {date.day}
-              </span>
-              <span
-                className={`block text-lg font-extrabold leading-tight ${selected ? "text-brand-200" : "text-brand-400"}`}
-              >
-                {new Date(`${date.value}T00:00:00`).getDate()}
-              </span>
-              <span
-                className={`block text-[10px] ${selected ? "text-brand-300" : "text-[#8a715b]"}`}
-              >
-                Dec
-              </span>
-              {selected && (
-                <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-brand-300" />
-              )}
-            </button>
-          );
-        })}
-      </div>
-      {error && (
-        <p className="mt-1 pl-1 text-xs text-red-600">{error.message}</p>
-      )}
-    </fieldset>
-  );
-}
-
-function TicketCounter({ value, onChange }) {
-  return (
-    <div className="flex items-center justify-between gap-4">
-      <div>
-        <p className="text-xs font-bold uppercase tracking-[0.16em] text-brand-300">
-          Number of tickets
-        </p>
-        <p className="mt-1 text-[11px] text-[#8a715b]">
-          Maximum {MAX_TICKETS} per booking
-        </p>
-      </div>
-      <div className="flex items-center gap-1 rounded-full border border-[#ead8b0] bg-white p-1">
-        <button
-          type="button"
-          onClick={() => onChange(Math.max(1, value - 1))}
-          disabled={value === 1}
-          aria-label="Decrease ticket count"
-          className="flex h-8 w-8 items-center justify-center rounded-full text-lg font-bold text-brand-200 transition hover:bg-brand-50 disabled:cursor-not-allowed disabled:opacity-30"
-        >
-          −
-        </button>
-        <span className="w-8 text-center text-sm font-extrabold tabular-nums text-brand-400">
-          {value}
-        </span>
-        <button
-          type="button"
-          onClick={() => onChange(Math.min(MAX_TICKETS, value + 1))}
-          disabled={value === MAX_TICKETS}
-          aria-label="Increase ticket count"
-          className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-200 text-lg font-bold text-white transition hover:bg-brand-300 disabled:cursor-not-allowed disabled:opacity-30"
-        >
-          +
-        </button>
-      </div>
-    </div>
-  );
-}
 
 export default function Form() {
   const [ticketCount, setTicketCount] = useState(1);
@@ -231,7 +109,11 @@ export default function Form() {
             )}
           />
           <div className="rounded-[var(--radius-input)] border border-[#ead8b0] bg-brand-50/60 px-4 py-3.5">
-            <TicketCounter value={ticketCount} onChange={setTicketCount} />
+            <TicketCounter  
+              value={ticketCount}
+              onChange={setTicketCount}
+              MAX_TICKETS={MAX_TICKETS}
+            />
           </div>
           <div className="flex items-center justify-between rounded-[var(--radius-input)] border border-brand-300/25 bg-brand-50 px-4 py-3.5">
             <div className="text-sm text-[#8a715b]">
