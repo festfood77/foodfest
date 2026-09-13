@@ -46,6 +46,8 @@ Deno.serve(async (req) => {
         payload.payload?.order?.entity?.id;
 
       if (orderId) {
+        const paymentId = payload.payload?.payment?.entity?.id;
+        
         // Environment variables
         const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
         const supabaseServiceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
@@ -55,7 +57,10 @@ Deno.serve(async (req) => {
 
         const { error } = await supabase
           .from("bookings")
-          .update({ payment_status: "paid" })
+          .update({ 
+            payment_status: "paid",
+            ...(paymentId && { razorpay_payment_id: paymentId })
+          })
           .eq("razorpay_order_id", orderId);
 
         if (error) {

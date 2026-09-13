@@ -232,7 +232,7 @@ Deno.serve(async (req) => {
           mobile,
           email: email.trim(),
           age: parsedAge,
-          date: date,
+          visit_date: date,
           tickets: parsedTickets,
           total_amount: totalAmount,
           payment_status: "pending",

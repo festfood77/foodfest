@@ -57,6 +57,8 @@ Deno.serve(async (req) => {
       .from("bookings")
       .update({
         payment_status: "paid",
+        razorpay_payment_id,
+        razorpay_signature,
       })
       .eq("id", booking_id)
       .eq("razorpay_order_id", razorpay_order_id)
