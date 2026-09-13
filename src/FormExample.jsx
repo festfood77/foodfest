@@ -1,4 +1,3 @@
-// this is just an example
 
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
