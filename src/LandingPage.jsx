@@ -7,7 +7,7 @@ export default function LandingPage() {
     <div className="w-full min-h-dvh bg-brand-100 overflow-y-auto flex justify-center">
       <div className="w-full max-w-md relative bg-surface-0 shadow-xl h-max">
         <img
-          src="/landing_page2.avif"
+          src="/landing_page3.avif"
           alt="Landing Page"
           className="w-full h-auto block"
         />
