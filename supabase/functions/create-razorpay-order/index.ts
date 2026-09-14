@@ -2,7 +2,6 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import { corsHeaders } from "../_shared/cors.ts";
 
-const TICKET_PRICE = 299;
 const MAX_TICKETS = 3;
 
 Deno.serve(async (req) => {
@@ -40,6 +39,7 @@ Deno.serve(async (req) => {
       age,
       date,
       tickets,
+      ticketPrice,
     } = body;
 
     // Validate full name
@@ -162,9 +162,26 @@ Deno.serve(async (req) => {
       );
     }
 
+    // Validate ticketPrice
+    const parsedTicketPrice = Number(ticketPrice);
+    if (parsedTicketPrice !== 299 && parsedTicketPrice !== 599) {
+      return new Response(
+        JSON.stringify({
+          error: "Invalid ticket price",
+        }),
+        {
+          status: 400,
+          headers: {
+            ...corsHeaders,
+            "Content-Type": "application/json",
+          },
+        },
+      );
+    }
+
     // Calculate amount on the server.
     // Never trust totalAmount sent by the frontend.
-    const totalAmount = parsedTickets * TICKET_PRICE;
+    const totalAmount = parsedTickets * parsedTicketPrice;
 
     // Environment variables
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;

@@ -1,11 +1,14 @@
-import Form from "./form/Form";
-import FormHeader from "./form/FormHeader";
+import { BrowserRouter, Route, Routes } from "react-router";
+import LandingPage from "./LandingPage";
+import FormPage from "./form/FormPage";
 
 export default function App() {
   return (
-    <div className="bg-brand-100 min-h-dvh">
-      <FormHeader />
-      <Form />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/form" element={<FormPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }

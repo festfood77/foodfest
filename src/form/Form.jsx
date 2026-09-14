@@ -6,20 +6,20 @@ import DateSelector from "./DateSelector";
 import FloatingInput from "./FloatingInput";
 import Spinner from "./Spinner";
 import TicketCounter from "./TicketCounter";
+import TicketSelector from "./TicketSelector";
 
-const TICKET_PRICE = 299;
 const MAX_TICKETS = 3;
 
 export default function Form() {
   const [ticketCount, setTicketCount] = useState(1);
-  const STORAGE_KEY = 'disneyland-foodfest-registration-draft';
+  const STORAGE_KEY = "disneyland-foodfest-registration-draft";
 
   const getSavedDraft = () => {
     try {
       const draft = localStorage.getItem(STORAGE_KEY);
       if (draft) return JSON.parse(draft);
     } catch (e) {
-      console.error('Failed to parse draft', e);
+      console.error("Failed to parse draft", e);
     }
     return null;
   };
@@ -34,7 +34,14 @@ export default function Form() {
     reset,
     formState: { errors, isDirty },
   } = useForm({
-    defaultValues: savedDraft || { fullName: "", mobile: "", email: "", date: "", age: "" },
+    defaultValues: savedDraft || {
+      fullName: "",
+      mobile: "",
+      email: "",
+      date: "",
+      age: "",
+      ticketPrice: 299,
+    },
   });
 
   const [submitted, setSubmitted] = useState(false);
@@ -51,11 +58,11 @@ export default function Form() {
     if (!isDirty) return;
     const handleBeforeUnload = (event) => {
       event.preventDefault();
-      event.returnValue = '';
+      event.returnValue = "";
     };
-    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener("beforeunload", handleBeforeUnload);
     return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [isDirty]);
 
@@ -71,6 +78,7 @@ export default function Form() {
           date: data.date,
           age: data.age,
           tickets: ticketCount,
+          ticketPrice: data.ticketPrice,
         },
       });
 
@@ -81,7 +89,7 @@ export default function Form() {
             "Failed to create application",
         );
       }
-      
+
       const { bookingId, orderId, amount, currency, keyId } = res.data;
 
       const options = {
@@ -95,7 +103,7 @@ export default function Form() {
           setIsVerifying(true);
           try {
             const verifyRes = await supabase.functions.invoke(
-              'verify-razorpay-payment',
+              "verify-razorpay-payment",
               {
                 body: {
                   razorpay_payment_id: response.razorpay_payment_id,
@@ -107,15 +115,15 @@ export default function Form() {
             );
 
             if (verifyRes.error || !verifyRes.data?.success) {
-              throw new Error('Payment verification failed');
+              throw new Error("Payment verification failed");
             }
 
             localStorage.removeItem(STORAGE_KEY);
             reset();
             setSubmitted(true);
           } catch (error) {
-            console.error('Verification Error:', error);
-            alert('Payment verification failed. Please contact support.');
+            console.error("Verification Error:", error);
+            alert("Payment verification failed. Please contact support.");
           } finally {
             setIsVerifying(false);
           }
@@ -135,7 +143,6 @@ export default function Form() {
         alert("Payment failed: " + response.error.description);
       });
       rzp.open();
-
     } catch (error) {
       console.error("Submission Error:", error);
       alert(error.message);
@@ -144,7 +151,8 @@ export default function Form() {
     }
   };
 
-  const totalAmount = ticketCount * TICKET_PRICE;
+  const currentTicketPrice = formData.ticketPrice || 299;
+  const totalAmount = ticketCount * currentTicketPrice;
 
   if (submitted) {
     return <ApplicationSubmitted />;
@@ -249,6 +257,18 @@ export default function Form() {
               />
             )}
           />
+          <Controller
+            name="ticketPrice"
+            control={control}
+            rules={{ required: "Please select a ticket type" }}
+            render={({ field }) => (
+              <TicketSelector
+                value={field.value}
+                onChange={field.onChange}
+                error={errors.ticketPrice}
+              />
+            )}
+          />
           <div className="rounded-[var(--radius-input)] border border-[#ead8b0] bg-brand-50/60 px-4 py-3.5">
             <TicketCounter
               value={ticketCount}
@@ -258,7 +278,8 @@ export default function Form() {
           </div>
           <div className="flex items-center justify-between rounded-[var(--radius-input)] border border-brand-300/25 bg-brand-50 px-4 py-3.5">
             <div className="text-sm text-[#8a715b]">
-              ₹{TICKET_PRICE} × {ticketCount} ticket{ticketCount > 1 ? "s" : ""}
+              ₹{currentTicketPrice} × {ticketCount} ticket
+              {ticketCount > 1 ? "s" : ""}
             </div>
             <div className="text-right">
               <span className="block text-[10px] font-bold uppercase tracking-wider text-brand-300">
