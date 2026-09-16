@@ -1,7 +1,7 @@
 import React from "react";
 
 const TICKET_OPTIONS = [
-  { value: 299, name: "Normal" },
+  { value: 1, name: "Normal" },
   { value: 599, name: "VIP" },
 ];
 
