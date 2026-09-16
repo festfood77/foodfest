@@ -164,7 +164,7 @@ Deno.serve(async (req) => {
 
     // Validate ticketPrice
     const parsedTicketPrice = Number(ticketPrice);
-    if (parsedTicketPrice !== 299 && parsedTicketPrice !== 599) {
+    if (parsedTicketPrice !== 1 && parsedTicketPrice !== 599) {
       return new Response(
         JSON.stringify({
           error: "Invalid ticket price",
