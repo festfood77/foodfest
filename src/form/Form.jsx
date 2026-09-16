@@ -40,7 +40,7 @@ export default function Form() {
       email: "",
       date: "",
       age: "",
-      ticketPrice: 1,
+      ticketPrice: 299,
     },
   });
 
@@ -151,7 +151,7 @@ export default function Form() {
     }
   };
 
-  const currentTicketPrice = formData.ticketPrice || 1;
+  const currentTicketPrice = formData.ticketPrice || 299;
   const totalAmount = ticketCount * currentTicketPrice;
 
   if (submitted) {
