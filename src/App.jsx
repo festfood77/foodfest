@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import LandingPage from "./LandingPage";
 import FormPage from "./form/FormPage";
+import ApplicationSubmitted from "./form/ApplicationSubmitted";
 
 export default function App() {
   return (
@@ -8,6 +9,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/form" element={<FormPage />} />
+        <Route path="/submitted" element={<ApplicationSubmitted />} />
       </Routes>
     </BrowserRouter>
   );
