@@ -75,7 +75,7 @@ export default function LandingPage() {
 
       {/* ── DESCRIPTION SECTION ── */}
       <section className="lp-desc">
-        <div className="lp-desc-inner">
+        <div className="lp-desc-inner mb-8">
           <h2 className="lp-desc-heading">DESCRIPTION</h2>
 
           {[
@@ -87,6 +87,7 @@ export default function LandingPage() {
             "One weekend. Big food. Bigger artists. Non-stop scenes.",
             "📍 Disneyland Foodfest — Delhi's Favourite Family Carnival.",
             "You already know where you need to be. 👀",
+
           ].map((para, i) => (
             <p key={i} className="lp-desc-para">{para}</p>
           ))}
