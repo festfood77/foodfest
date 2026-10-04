@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import "./quantities.css";
 
 const TICKET_TYPES = [
-  { id: "eb1_d1", name: "Early Bird Pass", description: "Limited early bird offer – valid for 18th December", date: "18 Dec", day: "Friday", price: 299, soldOut: false },
+  { id: "eb1_d1", name: "Early Bird Pass", description: "Limited early bird offer – valid for 18th December", date: "18 Dec", day: "Friday", price: 299, soldOut: true },
   { id: "eb1_d2", name: "Early Bird Pass", description: "Limited early bird offer – valid for 19th December", date: "19 Dec", day: "Saturday", price: 299, soldOut: false },
   { id: "eb1_d3", name: "Early Bird Pass", description: "Limited early bird offer – valid for 20th December", date: "20 Dec", day: "Sunday", price: 299, soldOut: false },
 
