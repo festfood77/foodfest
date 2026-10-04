@@ -11,6 +11,13 @@ const TICKET_TYPES = [
     soldOut: false,
   },
   {
+    id: "earlybird1_soldout",
+    name: "Early Bird Pass",
+    description: "Limited early bird offer – valid for any 1 day",
+    price: 299,
+    soldOut: true,
+  },
+  {
     id: "earlybird2",
     name: "Early Bird Plus",
     description: "Early bird offer with premium perks – valid for any 1 day",
@@ -23,6 +30,13 @@ const TICKET_TYPES = [
     description: "General entry – valid for any 1 day",
     price: 499,
     soldOut: false,
+  },
+  {
+    id: "ticket1_soldout",
+    name: "Standard Ticket",
+    description: "General entry – valid for any 1 day",
+    price: 499,
+    soldOut: true,
   },
   {
     id: "ticket2",
