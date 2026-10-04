@@ -61,13 +61,10 @@ export default function CheckoutForm() {
       // Trick the backend into using our exact totalAmount by sending tickets: 1, ticketPrice: totalAmount
       const res = await supabase.functions.invoke("create-razorpay-order", {
         body: {
-          fullName: "Guest User",
-          mobile: mobile,
-          email: email,
-          date: "Any Day",
-          age: 18,
-          tickets: 1,
-          ticketPrice: totalAmount,
+          mobile: inputVal,
+          tickets: totalTickets,
+          totalAmount: totalAmount,
+          quantities: quantities,
         },
       });
 

@@ -33,155 +33,60 @@ Deno.serve(async (req) => {
     const body = await req.json();
 
     const {
-      fullName,
       mobile,
-      email,
-      age,
-      date,
       tickets,
-      ticketPrice,
+      totalAmount,
+      quantities,
     } = body;
 
-    // Validate full name
-    if (
-      typeof fullName !== "string" ||
-      fullName.trim().length < 3
-    ) {
-      return new Response(
-        JSON.stringify({
-          error: "Invalid full name",
-        }),
-        {
-          status: 400,
-          headers: {
-            ...corsHeaders,
-            "Content-Type": "application/json",
-          },
-        },
-      );
-    }
-
     // Validate mobile number
-    if (
-      typeof mobile !== "string" ||
-      !/^[6-9]\d{9}$/.test(mobile)
-    ) {
-      return new Response(
-        JSON.stringify({
-          error: "Invalid mobile number",
-        }),
-        {
-          status: 400,
-          headers: {
-            ...corsHeaders,
-            "Content-Type": "application/json",
-          },
-        },
-      );
-    }
-
-    // Validate email
-    if (
-      typeof email !== "string" ||
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-    ) {
-      return new Response(
-        JSON.stringify({
-          error: "Invalid email address",
-        }),
-        {
-          status: 400,
-          headers: {
-            ...corsHeaders,
-            "Content-Type": "application/json",
-          },
-        },
-      );
-    }
-
-    // Validate age
-    const parsedAge = Number(age);
-
-    if (
-      !Number.isInteger(parsedAge) ||
-      parsedAge < 5 ||
-      parsedAge > 100
-    ) {
-      return new Response(
-        JSON.stringify({
-          error: "Invalid age",
-        }),
-        {
-          status: 400,
-          headers: {
-            ...corsHeaders,
-            "Content-Type": "application/json",
-          },
-        },
-      );
-    }
-
-    // Validate date
-    if (
-      typeof date !== "string" ||
-      !/^\d{4}-\d{2}-\d{2}$/.test(date)
-    ) {
-      return new Response(
-        JSON.stringify({
-          error: "Invalid visit date",
-        }),
-        {
-          status: 400,
-          headers: {
-            ...corsHeaders,
-            "Content-Type": "application/json",
-          },
-        },
-      );
+    const isEmail = mobile.includes("@");
+    let cleanMobile = mobile;
+    
+    if (isEmail) {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mobile)) {
+        return new Response(JSON.stringify({ error: "Invalid email address" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      }
+    } else {
+      cleanMobile = mobile.replace(/\D/g, '').slice(-10);
+      if (!/^[6-9]\d{9}$/.test(cleanMobile)) {
+        return new Response(JSON.stringify({ error: "Invalid mobile number" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      }
     }
 
     // Validate tickets
     const parsedTickets = Number(tickets);
-
-    if (
-      !Number.isInteger(parsedTickets) ||
-      parsedTickets < 1 ||
-      parsedTickets > MAX_TICKETS
-    ) {
-      return new Response(
-        JSON.stringify({
-          error: "Invalid ticket count",
-        }),
-        {
-          status: 400,
-          headers: {
-            ...corsHeaders,
-            "Content-Type": "application/json",
-          },
-        },
-      );
+    if (!Number.isInteger(parsedTickets) || parsedTickets < 1 || parsedTickets > 4) {
+      return new Response(JSON.stringify({ error: "Invalid ticket count" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
-    // Validate ticketPrice
-    const parsedTicketPrice = Number(ticketPrice);
-    if (parsedTicketPrice !== 299 && parsedTicketPrice !== 599) {
-      return new Response(
-        JSON.stringify({
-          error: "Invalid ticket price",
-        }),
-        {
-          status: 400,
-          headers: {
-            ...corsHeaders,
-            "Content-Type": "application/json",
-          },
-        },
-      );
+    // Calculate dates and types
+    const datesSet = new Set<string>();
+    const typesSet = new Set<string>();
+
+    if (quantities && typeof quantities === "object") {
+      Object.entries(quantities).forEach(([id, qty]) => {
+        if (typeof qty === "number" && qty > 0) {
+          if (id.includes("_d1")) datesSet.add("18 Dec 2026");
+          if (id.includes("_d2")) datesSet.add("19 Dec 2026");
+          if (id.includes("_d3")) datesSet.add("20 Dec 2026");
+          if (id === "vip") {
+            datesSet.add("18 Dec 2026");
+            datesSet.add("19 Dec 2026");
+            datesSet.add("20 Dec 2026");
+            typesSet.add("VIP All Access Pass");
+          }
+      
+          if (id.startsWith("eb1")) typesSet.add("Early Bird Pass");
+          if (id.startsWith("eb2")) typesSet.add("Early Bird Plus");
+          if (id.startsWith("t1")) typesSet.add("Standard Ticket");
+          if (id.startsWith("t2")) typesSet.add("Standard Ticket Plus");
+        }
+      });
     }
 
-    // Calculate amount on the server.
-    // Never trust totalAmount sent by the frontend.
-    const totalAmount = parsedTickets * parsedTicketPrice;
+    const booked_dates = Array.from(datesSet);
+    const booked_types = Array.from(typesSet);
 
     // Environment variables
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
@@ -245,13 +150,11 @@ Deno.serve(async (req) => {
       await supabase
         .from("bookings")
         .insert({
-          full_name: fullName.trim(),
-          mobile,
-          email: email.trim(),
-          age: parsedAge,
-          visit_date: date,
+          mobile: cleanMobile,
           tickets: parsedTickets,
           total_amount: totalAmount,
+          booked_dates,
+          booked_types,
           payment_status: "pending",
           razorpay_order_id: razorpayData.id,
         })
