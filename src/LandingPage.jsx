@@ -27,7 +27,7 @@ export default function LandingPage() {
         {/* Poster / Left image */}
         <div className="lp-poster-wrap">
           <img
-            src="/landingpage4.avif"
+            src="/landing_page3.avif"
             alt="Horn OK Please Event Poster"
             className="lp-poster-img"
           />
@@ -62,6 +62,15 @@ export default function LandingPage() {
             <span className="lp-price">INR 299 – 899</span>
           </div>
         </div>
+      </section>
+
+      {/* ── MIDDLE IMAGE ── */}
+      <section className="lp-middle-image">
+        <img
+          src="/landingpage4.avif"
+          alt="Event Atmosphere"
+          className="lp-middle-img"
+        />
       </section>
 
       {/* ── DESCRIPTION SECTION ── */}

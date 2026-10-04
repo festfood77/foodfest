@@ -118,6 +118,19 @@
   font-weight: 600;
 }
 
+/* ── MIDDLE IMAGE ── */
+.lp-middle-image {
+  background: #fff;
+  padding: 0;
+  width: 100%;
+}
+
+.lp-middle-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 /* ── DESCRIPTION – full-width white section ── */
 .lp-desc {
   background: #fff;
@@ -232,6 +245,16 @@
   }
 
   /* Description – full-width on desktop too */
+  .lp-middle-image {
+    padding: 0 40px;
+  }
+  
+  .lp-middle-img {
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 20px;
+  }
+
   .lp-desc {
     padding: 40px 40px 60px;
   }
