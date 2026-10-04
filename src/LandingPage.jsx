@@ -67,8 +67,8 @@ export default function LandingPage() {
       {/* ── MIDDLE IMAGE ── */}
       <section className="lp-middle-image">
         <img
-          src="/landingpage4.avif"
-          alt="Event Atmosphere"
+          src="/poster.avif"
+          alt="Event Poster Landscape"
           className="lp-middle-img"
         />
       </section>

@@ -120,8 +120,8 @@
 
 /* ── MIDDLE IMAGE ── */
 .lp-middle-image {
-  background: #fff;
-  padding: 0;
+  background: #111;
+  padding: 24px 16px 24px; /* added bottom padding to space it from the white description below */
   width: 100%;
 }
 
@@ -129,6 +129,8 @@
   width: 100%;
   height: auto;
   display: block;
+  border-radius: 12px; /* rounded corners on mobile */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* ── DESCRIPTION – full-width white section ── */
@@ -246,11 +248,11 @@
 
   /* Description – full-width on desktop too */
   .lp-middle-image {
-    padding: 40px 40px 0;
+    padding: 40px 40px 40px;
   }
   
   .lp-middle-img {
-    max-width: 600px;
+    max-width: 900px;
     margin: 0 auto;
     border-radius: 20px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
