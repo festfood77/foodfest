@@ -90,12 +90,17 @@ export default function QuantitiesPage() {
         <div className="qp-left">
           {/* Event header */}
           <div className="qp-event-header">
-            <h1 className="qp-event-title">
-              Disney Land Food Fest – The Happiest Food Festival 2.2
-            </h1>
-            <p className="qp-event-meta">
-              📅 18 December – 20 December 2026 &nbsp;|&nbsp; 11:00 AM – 11:00 PM
-            </p>
+            <button className="qp-back-btn" onClick={() => navigate("/")}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            </button>
+            <div className="qp-header-info">
+              <h1 className="qp-event-title">
+                Disney Land Food Fest – The Happiest Food Festival 2.2
+              </h1>
+              <p className="qp-event-meta">
+                📅 18 December – 20 December 2026 &nbsp;|&nbsp; 11:00 AM – 11:00 PM
+              </p>
+            </div>
           </div>
 
           {/* Ticket rows */}
