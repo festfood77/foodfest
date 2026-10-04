@@ -27,7 +27,7 @@ export default function LandingPage() {
         {/* Poster / Left image */}
         <div className="lp-poster-wrap">
           <img
-            src="/landing_page3.avif"
+            src="/landingpage4.avif"
             alt="Horn OK Please Event Poster"
             className="lp-poster-img"
           />
