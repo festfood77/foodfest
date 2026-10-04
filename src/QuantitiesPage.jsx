@@ -112,11 +112,14 @@ export default function QuantitiesPage() {
                         value={quantities[ticket.id]}
                         onChange={(e) => handleQtyChange(ticket.id, e.target.value)}
                       >
-                        {[0, 1, 2, 3, 4].map((n) => (
-                          <option key={n} value={n}>
-                            Qty: {n}
-                          </option>
-                        ))}
+                        {Array.from(
+                          { length: Math.min(4, 4 - totalTickets + quantities[ticket.id]) + 1 },
+                          (_, n) => (
+                            <option key={n} value={n}>
+                              Qty: {n}
+                            </option>
+                          )
+                        )}
                       </select>
                     </div>
                   )}
