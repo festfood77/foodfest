@@ -55,7 +55,7 @@ export default function LandingPage() {
           <div className="lp-book-row" ref={heroBookRef}>
             <button
               className="lp-book-btn"
-              onClick={() => navigate("/form")}
+              onClick={() => navigate("/quantities")}
             >
               Book Now
             </button>
@@ -101,7 +101,7 @@ export default function LandingPage() {
         </p>
         <button
           className="lp-sticky-btn"
-          onClick={() => navigate("/form")}
+          onClick={() => navigate("/quantities")}
         >
           Book Now
         </button>
