@@ -4,6 +4,7 @@ import LandingPage from "./LandingPage";
 import QuantitiesPage from "./QuantitiesPage";
 import FormPage from "./form/FormPage";
 import ApplicationSubmitted from "./form/ApplicationSubmitted";
+import Form from "./form/Form";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -23,6 +24,8 @@ export default function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/quantities" element={<QuantitiesPage />} />
         <Route path="/form" element={<FormPage />} />
+        <Route path="/form1" element={<Form />} />
+
         <Route path="/submitted" element={<ApplicationSubmitted />} />
       </Routes>
     </BrowserRouter>
