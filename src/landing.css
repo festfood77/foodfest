@@ -121,7 +121,7 @@
 /* ── MIDDLE IMAGE ── */
 .lp-middle-image {
   background: #111;
-  padding: 24px 16px 24px; /* added bottom padding to space it from the white description below */
+  padding: 8px 16px 16px; /* reduced padding */
   width: 100%;
 }
 
@@ -248,7 +248,7 @@
 
   /* Description – full-width on desktop too */
   .lp-middle-image {
-    padding: 40px 40px 40px;
+    padding: 16px 40px 24px; /* reduced padding */
   }
   
   .lp-middle-img {
