@@ -1,0 +1,260 @@
+/* ─────────────────────────────────────────
+   LANDING PAGE  –  landing.css
+   Mobile-first; desktop breakpoint at 768px
+   ───────────────────────────────────────── */
+
+/* Root wrapper */
+.lp-root {
+  background: #111;
+  min-height: 100dvh;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #fff;
+}
+
+/* ── HERO ── */
+.lp-hero {
+  background: #111;
+  display: flex;
+  flex-direction: column; /* mobile: stack */
+  padding: 16px 16px 0;   /* mobile: padding so image is NOT full-bleed */
+  gap: 0;
+}
+
+/* ── POSTER WRAP (mobile: full-width card, desktop: left column) ── */
+.lp-poster-wrap {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  line-height: 0;
+  flex-shrink: 0;
+}
+
+.lp-poster-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* ── INFO PANEL ── */
+.lp-info {
+  padding: 20px 4px 28px;
+  background: #111;
+}
+
+.lp-category {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #e8b84b;
+  margin-bottom: 10px;
+}
+
+.lp-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 12px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.lp-datetime {
+  font-size: 13px;
+  color: #ffffff;
+  margin: 0 0 4px;
+  font-weight: 400;
+  opacity: 0.75;
+}
+
+.lp-venue {
+  font-size: 13px;
+  color: #ffffff;
+  opacity: 0.75;
+  margin: 0 0 16px;
+}
+
+.lp-tags {
+  margin-bottom: 20px;
+}
+
+.lp-tag {
+  display: inline-block;
+  border: 1px solid #e53e3e;
+  color: #e53e3e;
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.lp-book-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.lp-book-btn {
+  background: #fff;
+  color: #000;
+  font-weight: 700;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  padding: 11px 26px;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.lp-book-btn:hover  { background: #e8b84b; }
+.lp-book-btn:active { transform: scale(0.97); }
+
+.lp-price {
+  font-size: 15px;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* ── DESCRIPTION – full-width white section ── */
+.lp-desc {
+  background: #fff;
+  color: #1a1a1a;
+  padding: 28px 20px 48px;
+  width: 100%;
+}
+
+.lp-desc-inner {
+  /* no visual styling – just a passthrough wrapper */
+}
+
+.lp-desc-heading {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #111;
+  margin: 0 0 20px;
+}
+
+.lp-desc-para {
+  font-size: 14px;
+  line-height: 1.75;
+  color: #333;
+  margin: 0 0 14px;
+}
+
+/* ── STICKY BAR ── */
+.lp-sticky {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-top: 1px solid #e0e0e0;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  z-index: 200;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.18);
+}
+
+.lp-sticky--show {
+  transform: translateY(0);
+}
+
+.lp-sticky-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #111;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lp-sticky-btn {
+  background: #000;
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+  transition: background 0.2s;
+}
+
+.lp-sticky-btn:hover { background: #222; }
+
+/* ══════════════════════════════════════════
+   DESKTOP  ≥ 768 px
+   ══════════════════════════════════════════ */
+@media (min-width: 768px) {
+
+  /* Hero becomes a two-column row */
+  .lp-hero {
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 32px 40px;
+    gap: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* Image column – fixed width, rounded card */
+  .lp-poster-wrap {
+    width: 340px;
+    min-width: 300px;
+    border-radius: 20px;
+    /* slight drop shadow for depth */
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  }
+
+  /* Info takes remaining space */
+  .lp-info {
+    flex: 1;
+    padding: 8px 0 28px;
+  }
+
+  .lp-title {
+    font-size: 28px;
+  }
+
+  /* Description – full-width on desktop too */
+  .lp-desc {
+    padding: 40px 40px 60px;
+  }
+
+  .lp-desc-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* Hero section wrapper needs bg to span full width */
+  .lp-root > .lp-hero {
+    /* hero stays #111 but we need the outer root to also be #111 */
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+@media (min-width: 1100px) {
+  .lp-hero {
+    padding: 40px calc((100% - 1100px) / 2 + 40px);
+  }
+  .lp-desc {
+    padding: 40px calc((100% - 900px) / 2) 60px;
+  }
+}
