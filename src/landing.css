@@ -15,8 +15,10 @@
 .lp-hero {
   background: #111;
   display: flex;
-  flex-direction: column; /* mobile: stack */
-  padding: 24px 24px 0;   /* increased mobile padding for more margin */
+  flex-direction: column;
+  /* mobile: stack */
+  padding: 24px 24px 0;
+  /* increased mobile padding for more margin */
   gap: 0;
 }
 
@@ -109,8 +111,13 @@
   transition: background 0.2s, transform 0.1s;
 }
 
-.lp-book-btn:hover  { background: #e8b84b; }
-.lp-book-btn:active { transform: scale(0.97); }
+.lp-book-btn:hover {
+  background: #e8b84b;
+}
+
+.lp-book-btn:active {
+  transform: scale(0.97);
+}
 
 .lp-price {
   font-size: 15px;
@@ -121,7 +128,8 @@
 /* ── MIDDLE IMAGE ── */
 .lp-middle-image {
   background: #111;
-  padding: 8px 16px 16px; /* reduced padding */
+  padding: 8px 8px 8px;
+  /* reduced padding */
   width: 100%;
 }
 
@@ -129,7 +137,8 @@
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 12px; /* rounded corners on mobile */
+  border-radius: 12px;
+  /* rounded corners on mobile */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
@@ -210,7 +219,9 @@
   transition: background 0.2s;
 }
 
-.lp-sticky-btn:hover { background: #222; }
+.lp-sticky-btn:hover {
+  background: #222;
+}
 
 /* ══════════════════════════════════════════
    DESKTOP  ≥ 768 px
@@ -233,7 +244,7 @@
     min-width: 300px;
     border-radius: 20px;
     /* slight drop shadow for depth */
-    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
   }
 
   /* Info takes remaining space */
@@ -248,9 +259,10 @@
 
   /* Description – full-width on desktop too */
   .lp-middle-image {
-    padding: 16px 40px 24px; /* reduced padding */
+    padding: 16px 40px 24px;
+    /* reduced padding */
   }
-  
+
   .lp-middle-img {
     max-width: 900px;
     margin: 0 auto;
@@ -268,7 +280,7 @@
   }
 
   /* Hero section wrapper needs bg to span full width */
-  .lp-root > .lp-hero {
+  .lp-root>.lp-hero {
     /* hero stays #111 but we need the outer root to also be #111 */
     width: 100%;
     max-width: 100%;
@@ -280,6 +292,7 @@
   .lp-hero {
     padding: 40px calc((100% - 1100px) / 2 + 40px);
   }
+
   .lp-desc {
     padding: 40px calc((100% - 900px) / 2) 60px;
   }
