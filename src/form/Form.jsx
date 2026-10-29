@@ -8,7 +8,7 @@ import Spinner from "./Spinner";
 import TicketCounter from "./TicketCounter";
 import TicketSelector from "./TicketSelector";
 
-const MAX_TICKETS = 5;
+const MAX_TICKETS = 3;
 
 export default function Form() {
   const [ticketCount, setTicketCount] = useState(1);
@@ -40,7 +40,7 @@ export default function Form() {
       email: "",
       date: "",
       age: "",
-      ticketPrice: 199,
+      ticketPrice: 99,
     },
   });
 
@@ -151,7 +151,7 @@ export default function Form() {
     }
   };
 
-  const currentTicketPrice = formData.ticketPrice || 199;
+  const currentTicketPrice = formData.ticketPrice || 99;
   const totalAmount = ticketCount * currentTicketPrice;
 
   if (submitted) {

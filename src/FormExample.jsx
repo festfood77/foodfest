@@ -4,8 +4,9 @@ import { useForm, Controller } from "react-hook-form";
 
 /* ─── constants ─── */
 const DATE_OPTIONS = [
-  { value: "2026-12-26", label: "26 December 2026", day: "Sat" },
-  { value: "2026-12-27", label: "27 December 2026", day: "Sun" },
+  { value: "2024-12-18", label: "18 December 2024", day: "Wed" },
+  { value: "2024-12-19", label: "19 December 2024", day: "Thu" },
+  { value: "2024-12-20", label: "20 December 2024", day: "Fri" },
 ];
 
 const DON_OPTIONS = [
@@ -14,8 +15,8 @@ const DON_OPTIONS = [
   { value: "both", label: "Both" },
 ];
 
-const TICKET_PRICE = 199;
-const MAX_TICKETS = 5;
+const TICKET_PRICE = 99;
+const MAX_TICKETS = 3;
 
 /* ─── sub-components ─── */
 

@@ -1,8 +1,9 @@
 import React from "react";
 
 const DATE_OPTIONS = [
-  { value: "2026-12-26", day: "Sat" },
-  { value: "2026-12-27", day: "Sun" },
+  { value: "2024-12-18", day: "Wed" },
+  { value: "2024-12-19", day: "Thu" },
+  { value: "2024-12-20", day: "Fri" },
 ];
 
 export default function DateSelector({ value, onChange, error }) {
@@ -11,7 +12,7 @@ export default function DateSelector({ value, onChange, error }) {
       <legend className="mb-2.5 text-xs font-bold uppercase tracking-[0.16em] text-brand-300">
         Date of visit
       </legend>
-      <div className="grid grid-cols-2 gap-2.5">
+      <div className="grid grid-cols-3 gap-2.5">
         {DATE_OPTIONS.map((date) => {
           const selected = value === date.value;
           return (
