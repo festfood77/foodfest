@@ -64,6 +64,7 @@ export default function CheckoutForm() {
           tickets: totalTickets,
           totalAmount: totalAmount,
           quantities: quantities,
+          location: "Delhi",
         },
       });
 
