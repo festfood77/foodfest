@@ -155,6 +155,7 @@ Deno.serve(async (req) => {
           total_amount: totalAmount,
           booked_dates,
           booked_types,
+          location: "Delhi",
           payment_status: "pending",
           razorpay_order_id: razorpayData.id,
         })
