@@ -57,7 +57,7 @@ export default function LandingPage() {
             >
               Book Now
             </button>
-            <span className="lp-price">INR 99, 199, 299</span>
+            <span className="lp-price">INR 99 - 299</span>
           </div>
         </div>
       </section>

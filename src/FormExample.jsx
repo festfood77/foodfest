@@ -15,7 +15,7 @@ const DON_OPTIONS = [
   { value: "both", label: "Both" },
 ];
 
-const TICKET_PRICE = 299;
+const TICKET_PRICE = 99;
 const MAX_TICKETS = 3;
 
 /* ─── sub-components ─── */

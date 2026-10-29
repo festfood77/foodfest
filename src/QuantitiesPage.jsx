@@ -3,23 +3,15 @@ import { useNavigate } from "react-router";
 import "./quantities.css";
 
 const TICKET_TYPES = [
-  { id: "eb1_d1", name: "Early Bird Pass", description: "Limited early bird offer – valid for 18th December", date: "18 Dec", day: "Friday", price: 299, soldOut: true },
-  { id: "eb1_d2", name: "Early Bird Pass", description: "Limited early bird offer – valid for 19th December", date: "19 Dec", day: "Saturday", price: 299, soldOut: false },
-  { id: "eb1_d3", name: "Early Bird Pass", description: "Limited early bird offer – valid for 20th December", date: "20 Dec", day: "Sunday", price: 299, soldOut: false },
+  { id: "eb1_d1", name: "Early Bird Pass", description: "Limited early bird offer – valid for 18th December", date: "18 Dec", day: "Friday", price: 99, soldOut: true },
+  { id: "eb1_d2", name: "Early Bird Pass", description: "Limited early bird offer – valid for 19th December", date: "19 Dec", day: "Saturday", price: 99, soldOut: false },
+  { id: "eb1_d3", name: "Early Bird Pass", description: "Limited early bird offer – valid for 20th December", date: "20 Dec", day: "Sunday", price: 99, soldOut: false },
 
-  { id: "eb2_d1", name: "Early Bird Plus", description: "Early bird offer with premium perks – valid for 18th December", date: "18 Dec", day: "Friday", price: 399, soldOut: false },
-  { id: "eb2_d2", name: "Early Bird Plus", description: "Early bird offer with premium perks – valid for 19th December", date: "19 Dec", day: "Saturday", price: 399, soldOut: false },
-  { id: "eb2_d3", name: "Early Bird Plus", description: "Early bird offer with premium perks – valid for 20th December", date: "20 Dec", day: "Sunday", price: 399, soldOut: false },
+  { id: "t1_d1", name: "Standard Ticket", description: "General entry – valid for 18th December", date: "18 Dec", day: "Friday", price: 199, soldOut: false },
+  { id: "t1_d2", name: "Standard Ticket", description: "General entry – valid for 19th December", date: "19 Dec", day: "Saturday", price: 199, soldOut: false },
+  { id: "t1_d3", name: "Standard Ticket", description: "General entry – valid for 20th December", date: "20 Dec", day: "Sunday", price: 199, soldOut: false },
 
-  { id: "t1_d1", name: "Standard Ticket", description: "General entry – valid for 18th December", date: "18 Dec", day: "Friday", price: 499, soldOut: false },
-  { id: "t1_d2", name: "Standard Ticket", description: "General entry – valid for 19th December", date: "19 Dec", day: "Saturday", price: 499, soldOut: false },
-  { id: "t1_d3", name: "Standard Ticket", description: "General entry – valid for 20th December", date: "20 Dec", day: "Sunday", price: 499, soldOut: false },
-
-  { id: "t2_d1", name: "Standard Ticket Plus", description: "General entry with priority access – valid for 18th December", date: "18 Dec", day: "Friday", price: 599, soldOut: false },
-  { id: "t2_d2", name: "Standard Ticket Plus", description: "General entry with priority access – valid for 19th December", date: "19 Dec", day: "Saturday", price: 599, soldOut: false },
-  { id: "t2_d3", name: "Standard Ticket Plus", description: "General entry with priority access – valid for 20th December", date: "20 Dec", day: "Sunday", price: 599, soldOut: false },
-
-  { id: "vip", name: "VIP All Access Pass", description: "Full 3-day VIP access with exclusive perks", price: 899, soldOut: true },
+  { id: "vip", name: "VIP All Access Pass", description: "Full 3-day VIP access with exclusive perks", price: 299, soldOut: false },
 ];
 
 

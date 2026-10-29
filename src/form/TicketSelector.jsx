@@ -1,8 +1,9 @@
 import React from "react";
 
 const TICKET_OPTIONS = [
-  { value: 299, name: "Normal" },
-  { value: 599, name: "VIP" },
+  { value: 99, name: "Early Bird" },
+  { value: 199, name: "Standard" },
+  { value: 299, name: "VIP" },
 ];
 
 export default function TicketSelector({ value, onChange, error }) {
