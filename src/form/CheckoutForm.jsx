@@ -158,7 +158,7 @@ export default function CheckoutForm() {
             </button>
             <div className="cf-header-info">
               <h1>Disney Land Food Fest – The Happiest Food Festival 2.2</h1>
-              <p>📅 18 December – 20 December 2026 | 11:00 AM – 11:00 PM</p>
+              <p>📅 26 December – 27 December 2026 | 11:00 AM – 11:00 PM</p>
             </div>
             <div className="cf-header-meta">
               <span className="cf-header-price">INR {totalAmount}</span>

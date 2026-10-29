@@ -2,7 +2,7 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import { corsHeaders } from "../_shared/cors.ts";
 
-const MAX_TICKETS = 3;
+const MAX_TICKETS = 5;
 
 Deno.serve(async (req) => {
   // Handle CORS preflight request
@@ -56,8 +56,8 @@ Deno.serve(async (req) => {
 
     // Validate tickets
     const parsedTickets = Number(tickets);
-    if (!Number.isInteger(parsedTickets) || parsedTickets < 1 || parsedTickets > 4) {
-      return new Response(JSON.stringify({ error: "Invalid ticket count" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    if (!Number.isInteger(parsedTickets) || parsedTickets < 1 || parsedTickets > MAX_TICKETS) {
+      return new Response(JSON.stringify({ error: `You can only book between 1 and ${MAX_TICKETS} tickets` }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
     // Calculate dates and types
@@ -67,13 +67,11 @@ Deno.serve(async (req) => {
     if (quantities && typeof quantities === "object") {
       Object.entries(quantities).forEach(([id, qty]) => {
         if (typeof qty === "number" && qty > 0) {
-          if (id.includes("_d1")) datesSet.add("18 Dec 2026");
-          if (id.includes("_d2")) datesSet.add("19 Dec 2026");
-          if (id.includes("_d3")) datesSet.add("20 Dec 2026");
+          if (id.includes("_d1")) datesSet.add("26 Dec 2026");
+          if (id.includes("_d2")) datesSet.add("27 Dec 2026");
           if (id === "vip") {
-            datesSet.add("18 Dec 2026");
-            datesSet.add("19 Dec 2026");
-            datesSet.add("20 Dec 2026");
+            datesSet.add("26 Dec 2026");
+            datesSet.add("27 Dec 2026");
             typesSet.add("VIP All Access Pass");
           }
       
@@ -106,6 +104,33 @@ Deno.serve(async (req) => {
       supabaseUrl,
       supabaseServiceRoleKey,
     );
+
+    // Check existing paid bookings for this mobile number
+    const { data: existingBookings, error: checkError } = await supabase
+      .from("bookings")
+      .select("tickets")
+      .eq("mobile", cleanMobile)
+      .eq("payment_status", "paid");
+
+    if (checkError) {
+      console.error("Error checking existing bookings:", checkError);
+    } else if (existingBookings) {
+      const alreadyBooked = existingBookings.reduce((sum, b) => sum + (b.tickets || 0), 0);
+      if (alreadyBooked + parsedTickets > MAX_TICKETS) {
+        return new Response(
+          JSON.stringify({
+            error: `Maximum ${MAX_TICKETS} tickets allowed per phone number. You have already booked ${alreadyBooked} ticket(s).`,
+          }),
+          {
+            status: 400,
+            headers: {
+              ...corsHeaders,
+              "Content-Type": "application/json",
+            },
+          },
+        );
+      }
+    }
 
     // Create Razorpay order
     const razorpayResponse = await fetch(

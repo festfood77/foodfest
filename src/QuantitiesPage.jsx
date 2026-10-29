@@ -2,16 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import "./quantities.css";
 
+const MAX_TICKETS = 5;
+
 const TICKET_TYPES = [
-  { id: "eb1_d1", name: "Early Bird Pass", description: "Limited early bird offer – valid for 18th December", date: "18 Dec", day: "Friday", price: 99, soldOut: true },
-  { id: "eb1_d2", name: "Early Bird Pass", description: "Limited early bird offer – valid for 19th December", date: "19 Dec", day: "Saturday", price: 99, soldOut: false },
-  { id: "eb1_d3", name: "Early Bird Pass", description: "Limited early bird offer – valid for 20th December", date: "20 Dec", day: "Sunday", price: 99, soldOut: false },
+  { id: "t1_d1", name: "Standard Ticket", description: "General entry – valid for 26th December", date: "26 Dec", day: "Saturday", price: 199, soldOut: false },
+  { id: "t1_d2", name: "Standard Ticket", description: "General entry – valid for 27th December", date: "27 Dec", day: "Sunday", price: 199, soldOut: false },
 
-  { id: "t1_d1", name: "Standard Ticket", description: "General entry – valid for 18th December", date: "18 Dec", day: "Friday", price: 199, soldOut: false },
-  { id: "t1_d2", name: "Standard Ticket", description: "General entry – valid for 19th December", date: "19 Dec", day: "Saturday", price: 199, soldOut: false },
-  { id: "t1_d3", name: "Standard Ticket", description: "General entry – valid for 20th December", date: "20 Dec", day: "Sunday", price: 199, soldOut: false },
-
-  { id: "vip", name: "VIP All Access Pass", description: "Full 3-day VIP access with exclusive perks", price: 299, soldOut: false },
+  { id: "vip", name: "VIP All Access Pass", description: "Full 2-day VIP access with exclusive perks", price: 299, soldOut: false },
 ];
 
 
@@ -32,7 +29,7 @@ export default function QuantitiesPage() {
   };
 
   const handleCheckout = () => {
-    if (totalTickets === 0) return;
+    if (totalTickets === 0 || totalTickets > MAX_TICKETS) return;
     navigate("/form", {
       state: {
         quantities,
@@ -59,7 +56,7 @@ export default function QuantitiesPage() {
                 Disney Land Food Fest – The Happiest Food Festival 2.2
               </h1>
               <p className="qp-event-meta">
-                📅 18 December – 20 December 2026 &nbsp;|&nbsp; 11:00 AM – 11:00 PM
+                📅 26 December – 27 December 2026 &nbsp;|&nbsp; 11:00 AM – 11:00 PM
               </p>
             </div>
           </div>
@@ -98,7 +95,7 @@ export default function QuantitiesPage() {
                         onChange={(e) => handleQtyChange(ticket.id, e.target.value)}
                       >
                         {Array.from(
-                          { length: Math.min(4, 4 - totalTickets + quantities[ticket.id]) + 1 },
+                          { length: Math.min(MAX_TICKETS, MAX_TICKETS - totalTickets + quantities[ticket.id]) + 1 },
                           (_, n) => (
                             <option key={n} value={n}>
                               Qty: {n}

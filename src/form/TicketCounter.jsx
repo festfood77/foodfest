@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function TicketCounter({ value, onChange, MAX_TICKETS = 3 }) {
+export default function TicketCounter({ value, onChange, MAX_TICKETS = 5 }) {
   return (
     <div className="flex items-center justify-between gap-4">
       <div>

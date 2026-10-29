@@ -40,10 +40,10 @@ export default function LandingPage() {
           </h1>
 
           <p className="lp-datetime">
-            18 December – 20 December 2026 &nbsp;|&nbsp; 11:00 AM – 11:00 PM
+            26 December – 27 December 2026 &nbsp;|&nbsp; 11:00 AM – 11:00 PM
           </p>
 
-          <p className="lp-venue">South Delhi</p>
+          <p className="lp-venue">Rajpur Road, Dehradun</p>
 
           <div className="lp-tags">
             <span className="lp-tag">Food Festival</span>
@@ -57,7 +57,7 @@ export default function LandingPage() {
             >
               Book Now
             </button>
-            <span className="lp-price">INR 99 - 299</span>
+            <span className="lp-price">INR 199 - 299</span>
           </div>
         </div>
       </section>
@@ -77,13 +77,13 @@ export default function LandingPage() {
           <h2 className="lp-desc-heading">DESCRIPTION</h2>
 
           {[
-            "Delhi, clear your weekend plans — Disneyland Foodfest is BACK!",
+            "Dehradun, clear your weekend plans — Disneyland Foodfest is BACK!",
             "We're bringing the vibes with insane food, a power-packed artist lineup, epic shopping, games, rides and experiences you'll actually want on your camera roll.",
             "Come hungry because Disneyland Foodfest is serving iconic eats, viral legends, global flavours and desserts worth breaking the diet for. And when you're done eating? Catch your favourite artists live, discover cool homegrown brands, take on games and challenges, hit the rides and explore something new around every corner.",
             "Come with your gang, your date, your fam, your kids — or literally everyone. There's something happening for every age and every vibe.",
             "Eat. Vibe. Dance. Shop. Play. Repeat. 🔁",
             "One weekend. Big food. Bigger artists. Non-stop scenes.",
-            "📍 Disneyland Foodfest — Delhi's Favourite Family Carnival.",
+            "📍 Disneyland Foodfest — Dehradun's Favourite Family Carnival, Rajpur Road.",
             "You already know where you need to be. 👀",
           ].map((para, i) => (
             <p key={i} className="lp-desc-para">
