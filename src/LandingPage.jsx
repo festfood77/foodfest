@@ -12,7 +12,7 @@ export default function LandingPage() {
       ([entry]) => {
         setShowStickyBar(!entry.isIntersecting);
       },
-      { threshold: 0 }
+      { threshold: 0 },
     );
     if (heroBookRef.current) observer.observe(heroBookRef.current);
     return () => observer.disconnect();
@@ -20,10 +20,8 @@ export default function LandingPage() {
 
   return (
     <div className="lp-root">
-
       {/* ── HERO SECTION ── */}
       <section className="lp-hero">
-
         {/* Poster / Left image */}
         <div className="lp-poster-wrap">
           <img
@@ -59,19 +57,19 @@ export default function LandingPage() {
             >
               Book Now
             </button>
-            <span className="lp-price">INR 299 – 899</span>
+            <span className="lp-price">INR 99, 199, 299</span>
           </div>
         </div>
       </section>
 
       {/* ── MIDDLE IMAGE ── */}
-      <section className="lp-middle-image">
+      {/* <section className="lp-middle-image">
         <img
           src="/poster.avif"
           alt="Event Poster Landscape"
           className="lp-middle-img"
         />
-      </section>
+      </section> */}
 
       {/* ── DESCRIPTION SECTION ── */}
       <section className="lp-desc">
@@ -87,9 +85,10 @@ export default function LandingPage() {
             "One weekend. Big food. Bigger artists. Non-stop scenes.",
             "📍 Disneyland Foodfest — Delhi's Favourite Family Carnival.",
             "You already know where you need to be. 👀",
-
           ].map((para, i) => (
-            <p key={i} className="lp-desc-para">{para}</p>
+            <p key={i} className="lp-desc-para">
+              {para}
+            </p>
           ))}
         </div>
       </section>

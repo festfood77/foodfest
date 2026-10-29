@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { supabase } from "../lib/supabase";
 import Spinner from "./Spinner";
-import ApplicationSubmitted from "./ApplicationSubmitted";
 import "./checkout.css";
 
 export default function CheckoutForm() {
@@ -104,7 +103,7 @@ export default function CheckoutForm() {
               throw new Error("Payment verification failed");
             }
 
-            setSubmitted(true);
+            navigate("/submitted", { replace: true });
           } catch (error) {
             console.error("Verification Error:", error);
             alert("Payment verification failed. Please contact support.");
@@ -134,10 +133,6 @@ export default function CheckoutForm() {
       setIsSubmitting(false);
     }
   };
-
-  if (submitted) {
-    return <ApplicationSubmitted />;
-  }
 
   if (isVerifying) {
     return (
