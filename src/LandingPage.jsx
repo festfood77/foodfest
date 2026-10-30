@@ -63,13 +63,13 @@ export default function LandingPage() {
       </section>
 
       {/* ── MIDDLE IMAGE ── */}
-      {/* <section className="lp-middle-image">
+      <section className="lp-middle-image">
         <img
-          src="/poster.avif"
+          src="/img1.avif"
           alt="Event Poster Landscape"
           className="lp-middle-img"
         />
-      </section> */}
+      </section>
 
       {/* ── DESCRIPTION SECTION ── */}
       <section className="lp-desc">
